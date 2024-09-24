@@ -1,2 +1,3 @@
-# Trojan-worker
-Route Trojan v2ray configs traffic through Cloudflare, in addition to vmess and vless.
+<h1 align="center">
+  Trojan Worker
+</h1>
