@@ -2,6 +2,6 @@
   Trojan Worker
 </h1>
 
-<div align="center">
+<h2 align="center">
   English 🇬🇧 | [🇮🇷 فارسی](./README_fa.md)
-</div>
+</h2>
