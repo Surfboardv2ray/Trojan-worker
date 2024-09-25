@@ -24,7 +24,7 @@ In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare
 3. Click `Edit Code` code to enter the editing environment.
 4. Get the Latest version of the [Trojan script](https://github.com/Surfboardv2ray/Trojan-worker/releases/latest/download/worker.js), and copy the entire content.
 5. Paste the content of the script onto the mentioned step 3 javascript editing environment.
-6. Hit `Deploy` located at top-right corener (Consider hitting Ctrl+S combo first if the Deploy button doesn't light up)
+6. Click `Deploy` located at top-right corner (Consider hitting Ctrl+S combo first if the Deploy button doesn't light up)
 7. Your Worker subscription URL will be `https://{your_worker_address}.workers.dev/sub/{your_clean_ip}`
 
 ## Editing Source Links
