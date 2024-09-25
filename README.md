@@ -5,7 +5,7 @@
 <h2 align="center">
 Access Trojan configs using Cloudflare CDN.
   <h3>
-    English 🇬🇧 | <a href="README_fa.md">🇮🇷 فارسی</a>
+    English 🇬🇧 | <a href="README_FA.md">🇮🇷 فارسی</a>
   </h3> 
 </h2>
 
