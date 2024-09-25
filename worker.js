@@ -1,5 +1,5 @@
-// Devekioed by Surfboardv2ray, https://github.com/Surfboardv2ray/Trojan-worker
-// Version 1.0
+// Developed by Surfboardv2ray, https://github.com/Surfboardv2ray/Trojan-worker
+// Version 1.1
 // Tips: Change your subLinks accordingly. Note that only ws+tls+443 configs will work.
 // Your subscription link will be: 'https://{your_worker_address}.workers.dev/sub/{your_clean_ip}'
 
@@ -17,6 +17,11 @@ export default {
     let pathSegments = url.pathname.split('/').filter(segment => segment !== '');
     let realhostname = pathSegments[0] || '';
     let realpathname = pathSegments[1] || '';
+
+    // Create sets to store unique paths for each protocol
+    let trojanPaths = new Set();
+    let vlessPaths = new Set();
+    let vmessPaths = new Set();
 
     if (url.pathname.startsWith('/sub')) {
       let newConfigs = '';
@@ -82,8 +87,14 @@ export default {
                     fp: 'chrome',
                     alpn: 'http/1.1',
                   };
-                  let encodedVmess = 'vmess://' + btoa(JSON.stringify(configNew));
-                  newConfigs += encodedVmess + '\n';
+
+                  // Check for unique paths and avoid duplications
+                  let fullPath = configNew.path;
+                  if (!vmessPaths.has(fullPath)) {
+                    vmessPaths.add(fullPath);  // Add the path to the Set
+                    let encodedVmess = 'vmess://' + btoa(JSON.stringify(configNew));
+                    newConfigs += encodedVmess + '\n';
+                  }
                 }
               } else if (subConfig.startsWith('vless://')) {
                 // Handle VLESS configuration
@@ -113,8 +124,14 @@ export default {
                   port === '443' &&
                   type === 'ws'
                 ) {
-                  let newVlessConfig = `vless://${uuid}@${realpathname === '' ? url.hostname : realpathname}:${port}?encryption=none&security=${security}&sni=${url.hostname}&alpn=${alpn}&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=/${sni}${queryParams.get('path') || ''}#Node-${sni}`;
-                  newConfigs += newVlessConfig + '\n';
+                  let newPath = `/${sni}${queryParams.get('path') || ''}`;
+
+                  // Check for unique paths and avoid duplications
+                  if (!vlessPaths.has(newPath)) {
+                    vlessPaths.add(newPath);  // Add the path to the Set
+                    let newVlessConfig = `vless://${uuid}@${realpathname === '' ? url.hostname : realpathname}:${port}?encryption=none&security=${security}&sni=${url.hostname}&alpn=${alpn}&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${newPath}#Node-${sni}`;
+                    newConfigs += newVlessConfig + '\n';
+                  }
                 }
               } else if (subConfig.startsWith('trojan://')) {
                 // Handle Trojan configuration
@@ -154,21 +171,14 @@ export default {
                   port === '443' &&
                   type === 'ws'
                 ) {
-                  // Get the 'path' parameter
-                  let path = queryParams.get('path') || '';
-                  // Decode the path to handle encoded characters
-                  path = decodeURIComponent(path);
-                  // Ensure path starts with '/'
-                  if (!path.startsWith('/')) {
-                    path = '/' + path;
+                  let newPath = `/${sni}${decodeURIComponent(queryParams.get('path') || '')}`;
+
+                  // Check for unique paths and avoid duplications
+                  if (!trojanPaths.has(newPath)) {
+                    trojanPaths.add(newPath);  // Add the path to the Set
+                    let newTrojanConfig = `trojan://${password}@${realpathname === '' ? url.hostname : realpathname}:${port}?security=${security}&sni=${url.hostname}&alpn=${alpn}&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${encodeURIComponent(newPath)}#${remark ? encodeURIComponent(remark) : `Node-${sni}`}`;
+                    newConfigs += newTrojanConfig + '\n';
                   }
-
-                  // Build the new path with realhostname and path
-                  let newPath = `/${sni}${path}`;
-
-                  // Reconstruct the Trojan URL with updated host, path, etc.
-                  let newTrojanConfig = `trojan://${password}@${realpathname === '' ? url.hostname : realpathname}:${port}?security=${security}&sni=${url.hostname}&alpn=${alpn}&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${encodeURIComponent(newPath)}#${remark ? encodeURIComponent(remark) : `Node-${sni}`}`;
-                  newConfigs += newTrojanConfig + '\n';
                 }
               }
             } catch (error) {
