@@ -15,7 +15,7 @@ Access Trojan configs using Cloudflare CDN.
 )](https://github.com/surfboardv2ray/Trojan-worker)
 
 ## Introduction
-Cloudflare has made it possible to run serverless configs [(Edgetunnel, Vless and Trojan)]() and also access VPS configs via routing the traffic through the CDN [(Worker Panel, Vmess and Vless)]().
+🟠 Cloudflare has made it possible to run serverless configs [(Edgetunnel, Vless and Trojan)]() and also access VPS configs via routing the traffic through the CDN [(Worker Panel, Vmess and Vless)]().
 In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare CDN as well.
 
 ## Installation
