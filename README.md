@@ -6,13 +6,13 @@
 Access Trojan configs using Cloudflare CDN.
   <h3>
     English 🇬🇧 | <a href="README_fa.md">🇮🇷 فارسی</a>
-  </h3>
+  </h3> 
+</h2>
+
 [![Version](https://img.shields.io/github/v/release/surfboardv2ray/Trojan-worker?label=Version&color=blue)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
 [![Download](https://img.shields.io/github/downloads/surfboardv2ray/Trojan-worker/total?label=Downloads)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
 [![Stars](https://img.shields.io/github/stars/surfboardv2ray/Trojan-worker?style=flat&label=Stars&color=tomato
 )](https://github.com/surfboardv2ray/Trojan-worker)
-  
-</h2>
 
 ## Introduction
 Cloudflare has made it possible to run serverless configs [(Edgetunnel, Vless and Trojan)]() and also access VPS configs via routing the traffic through the CDN [(Worker Panel, Vmess and Vless)]().
@@ -27,4 +27,6 @@ In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare
 6. Hit `Deploy` located at top-right corener (Consider hitting Ctrl+S combo first if the Deploy button doesn't light up)
 7. Your Worker subscription URL will be `https://{your_worker_address}.workers.dev/sub/{your_clean_ip}`
 
-##
+## Editing Source Links
+🟡 You can add or change source subscription links over at `subLinks` in the initial part of the script. Both standard and base64 are supported.
+🟡 Note that Vmess, Vless and Trojan configs with Websocket (WS), TLS and port 443 characteristics will be gathered.
