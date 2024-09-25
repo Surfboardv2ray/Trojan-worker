@@ -32,4 +32,7 @@ In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare
 
 🟡 Note that Vmess, Vless and Trojan configs with Websocket (WS), TLS and port 443 characteristics will be gathered.
 
+## Additional Notes
+🟡 To find Clean IPs for your subscription, consider using [Scanners](https://ircf.space/scanner.html).
+
 ![0](./assets/redline.gif)
