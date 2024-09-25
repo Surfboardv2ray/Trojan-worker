@@ -35,3 +35,6 @@
 🟡 برای پیدا کردن آیپی تمیز از [اسکنرها](https://ircf.space/scanner.html) استفاده کنید.
 
 ![0](./assets/redline.gif)
+
+## استار
+[![Stargazers over time](https://starchart.cc/Surfboardv2ray/Trojan-worker.svg?variant=adaptive)](https://starchart.cc/Surfboardv2ray/Trojan-worker)
