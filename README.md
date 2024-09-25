@@ -36,3 +36,5 @@ In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare
 🟡 To find Clean IPs for your subscription, consider using [Scanners](https://ircf.space/scanner.html).
 
 ![0](./assets/redline.gif)
+## Stargazers
+[![Stargazers over time](https://starchart.cc/Surfboardv2ray/Trojan-worker.svg?variant=adaptive)](https://starchart.cc/Surfboardv2ray/Trojan-worker)
