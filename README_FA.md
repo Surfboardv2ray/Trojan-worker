@@ -32,9 +32,16 @@
 🟡 دقت کنید که از بین کانفیگ‌های لینک‌های سابسکریپشن، فقط کانفیگ‌های Vless و Vmess و Trojan با شبکه WS، امنیت TLS و پورت 443 برداشت خواهند شد.
 
 ## سایر نکات
-🟡 برای پیدا کردن آیپی تمیز از [اسکنرها](https://ircf.space/scanner.html) استفاده کنید.
+🟡 صفحه مربوط به آدرس اصلی ورکر، امکان ساختن لینک سابسکریپشن از منبع [آیپی‌های تمیز IRCF](https://github.com/ircfspace/cf2dns/blob/master/list/ipv4.json) رو به شما میده، اما همچنان پیشنهاد میشه از [اسکنرها](https://ircf.space/scanner.html) استفاده کنید.
 
 ![0](./assets/redline.gif)
+
+<p align="center">
+  <img src="assets/html.jpg" alt="html.jpg" width="500"/>
+</p>
+
+![0](./assets/redline.gif)
+
 
 ## استار
 [![Stargazers over time](https://starchart.cc/Surfboardv2ray/Trojan-worker.svg?variant=adaptive)](https://starchart.cc/Surfboardv2ray/Trojan-worker)
