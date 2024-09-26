@@ -37,7 +37,9 @@ In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare
 
 ![0](./assets/redline.gif)
 
-![html.jpg](assets/html.jpg)
+<p align="center">
+  <img src="assets/html.jpg" alt="html.jpg" width="500"/>
+</p>
 
 ## Stargazers
 [![Stargazers over time](https://starchart.cc/Surfboardv2ray/Trojan-worker.svg?variant=adaptive)](https://starchart.cc/Surfboardv2ray/Trojan-worker)
