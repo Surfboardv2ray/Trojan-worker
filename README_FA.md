@@ -6,6 +6,9 @@
 دسترسی به کانفیگ‌های تروجان از طریق سی‌دی‌ان کلاودفلیر.
   <h3>
     <a href="README.md">English 🇬🇧</a> | 🇮🇷 فارسی
+    <p>
+    <a href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
+    </p>
   </h3> 
 </h2>
 
