@@ -4,6 +4,8 @@
 
 <h2 align="center">
 دسترسی به کانفیگ‌های تروجان از طریق سی‌دی‌ان کلاودفلیر.
+<h2/>
+  
 <div align="left">
   <h3>
     <a href="README.md">English 🇬🇧</a> | 🇮🇷 فارسی
@@ -11,7 +13,6 @@
     <a href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
     </p>
   </h3> 
-</h2>
 </div>
   
 [![نسخه](https://img.shields.io/github/v/release/surfboardv2ray/Trojan-worker?label=Version&color=blue)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
