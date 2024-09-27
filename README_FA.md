@@ -7,9 +7,9 @@
 <h2/>
   
 <div align="left">
-    <a style="font-size: 16px href="README.md">English 🇬🇧</a> | 🇮🇷 فارسی
+    <a href="README.md">English 🇬🇧</a> | 🇮🇷 فارسی
   <br>
-    <a style="font-size: 16px href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
+    <a href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
     </p>
 </div>
   
