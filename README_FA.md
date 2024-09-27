@@ -7,12 +7,10 @@
 <h2/>
   
 <div align="left">
-  <h3>
     <a href="README.md">English 🇬🇧</a> | 🇮🇷 فارسی
     <p>
     <a href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
     </p>
-  </h3> 
 </div>
   
 [![نسخه](https://img.shields.io/github/v/release/surfboardv2ray/Trojan-worker?label=Version&color=blue)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
