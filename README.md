@@ -35,6 +35,8 @@ In this script, we attempt to allow Trojan VPS configs to be used via Cloudflare
 ## Additional Notes
 🟡 The base worker URL can fetch clean IPs via [IRCF Space Repo](https://github.com/ircfspace/cf2dns/blob/master/list/ipv4.json), but it's still recommended to use [Scanners](https://ircf.space/scanner.html).
 
+🟡 To get a certain number of configs instead of all the parsed configs list, add '?n=xxx' to end of your subscription link, where xxx is the number of the configs you need to be displayed.
+
 ![0](./assets/redline.gif)
 
 <p align="center">
