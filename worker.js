@@ -1,15 +1,18 @@
 // Developed by Surfboardv2ray, https://github.com/Surfboardv2ray/Trojan-worker
-// Version 1.2
+// Version 1.3
 // Tips: Change your subLinks accordingly. Note that only ws+tls+443 configs will work.
 // Your subscription link will be: 'https://{your_worker_address}.workers.dev/sub/{your_clean_ip}'
-
+// To get xxx number of configs, use '?n=xxx' at the end of your subscription link, for instance:
+// 'https://{your_worker_address}.workers.dev/sub/{your_clean_ip}?n=50' will return only 50 configs, randomly.
 
 const subLinks = [
   'https://raw.githubusercontent.com/Surfboardv2ray/Proxy-sorter/main/ws_tls/proxies/wstls',
   'https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/trojan',
   'https://raw.githubusercontent.com/Surfboardv2ray/TGParse/refs/heads/main/configtg.txt',
   'https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/refs/heads/main/protocols/trojan',
-  'https://raw.githubusercontent.com/yebekhe/V2Hub/main/Split/Normal/trojan',  // Add more links here as needed
+  'https://raw.githubusercontent.com/yebekhe/V2Hub/main/Split/Normal/trojan',
+  'https://raw.githubusercontent.com/itsyebekhe/vpnfail/refs/heads/main/subscription',
+//  'https://raw.githubusercontent.com/Surfboardv2ray/v2ray-worker-sub/refs/heads/master/providers/providers',    // Add more links here as needed
 ];
 
 export default {
@@ -274,9 +277,23 @@ export default {
         }
       }
 
+      // Check for the &n=xxx parameter
+      const nParam = url.searchParams.get('n');
+      let responseConfigs = newConfigs.trim().split('\n').filter(line => line !== ''); // Ensure no empty lines
+
+      if (nParam && !isNaN(nParam) && parseInt(nParam) > 0) {
+        const n = Math.min(parseInt(nParam), responseConfigs.length); // Get the minimum of n and available configs
+        const randomConfigs = getRandomItems(responseConfigs, n); // Get random items
+        return new Response(randomConfigs.join('\n'), {
+          headers: { 'Content-Type': 'text/plain' },
+        });
+      }
+
+      // If no &n=xxx parameter, return the entire result
       return new Response(newConfigs, {
         headers: { 'Content-Type': 'text/plain' },
       });
+      
     } else {
       // Handle non-/sub requests by proxying them
       const url = new URL(request.url);
@@ -289,6 +306,12 @@ export default {
     }
   },
 };
+
+// Function to get random items from an array
+function getRandomItems(array, count) {
+  const shuffled = array.sort(() => 0.5 - Math.random()); // Shuffle the array
+  return shuffled.slice(0, count); // Return the first 'count' items
+}
 
 function isIp(ipstr) {
   try {
