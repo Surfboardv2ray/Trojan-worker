@@ -7,11 +7,9 @@
 
 const subLinks = [
   'https://raw.githubusercontent.com/Surfboardv2ray/Proxy-sorter/main/ws_tls/proxies/wstls',
-  'https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/trojan',
   'https://raw.githubusercontent.com/Surfboardv2ray/TGParse/refs/heads/main/configtg.txt',
   'https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/refs/heads/main/protocols/trojan',
-  'https://raw.githubusercontent.com/yebekhe/V2Hub/main/Split/Normal/trojan',
-  'https://raw.githubusercontent.com/itsyebekhe/vpnfail/refs/heads/main/subscription',
+  'https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector_Py/refs/heads/main/sub/Mix/mix.txt',
 ];
 
 export default {
