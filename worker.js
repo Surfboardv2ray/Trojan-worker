@@ -1,5 +1,5 @@
 // Developed by Surfboardv2ray, https://github.com/Surfboardv2ray/Trojan-worker
-// Version 1.3
+// Version 1.4
 // Tips: Change your subLinks accordingly. Note that only ws+tls+443 configs will work.
 // Your subscription link will be: 'https://{your_worker_address}.workers.dev/sub/{your_clean_ip}'
 // To get xxx number of configs, use '?n=xxx' at the end of your subscription link, for instance:
@@ -12,7 +12,6 @@ const subLinks = [
   'https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/refs/heads/main/protocols/trojan',
   'https://raw.githubusercontent.com/yebekhe/V2Hub/main/Split/Normal/trojan',
   'https://raw.githubusercontent.com/itsyebekhe/vpnfail/refs/heads/main/subscription',
-//  'https://raw.githubusercontent.com/Surfboardv2ray/v2ray-worker-sub/refs/heads/master/providers/providers',    // Add more links here as needed
 ];
 
 export default {
@@ -22,11 +21,10 @@ export default {
     let realhostname = pathSegments[0] || '';
     let realpathname = pathSegments[1] || '';
 
-    // Handle the base URL ("/")
     if (url.pathname === '/') {
       // Return the HTML content
       return new Response(`
-        <!DOCTYPE html>
+              <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -103,7 +101,6 @@ export default {
       });
     }
 
-    // Create sets to store unique paths for each protocol
     let trojanPaths = new Set();
     let vlessPaths = new Set();
     let vmessPaths = new Set();
@@ -111,50 +108,31 @@ export default {
     if (url.pathname.startsWith('/sub')) {
       let newConfigs = '';
 
-      // Fetch configurations from all subLinks
       for (let subLink of subLinks) {
         try {
           let resp = await fetch(subLink);
-          if (!resp.ok) {
-            continue;  // Skip invalid responses
-          }
+          if (!resp.ok) continue;
           let subConfigs = await resp.text();
-
-          // Check if the content is base64 encoded
           let isBase64Encoded = false;
-          try {
-            atob(subConfigs);  // Try to decode it
-            isBase64Encoded = true;
-          } catch (e) {
-            isBase64Encoded = false;  // Not base64 encoded
-          }
 
-          // Decode base64 content if encoded
-          if (isBase64Encoded) {
-            subConfigs = atob(subConfigs);
-          }
+          try { atob(subConfigs); isBase64Encoded = true; } catch (e) { isBase64Encoded = false; }
+          if (isBase64Encoded) subConfigs = atob(subConfigs);
 
-          // Split configurations by lines
           subConfigs = subConfigs.split(/\r?\n/);
 
           for (let subConfig of subConfigs) {
-            subConfig = subConfig.trim();  // Trim any leading/trailing whitespace
-            if (subConfig === '') continue;  // Skip empty lines
+            subConfig = subConfig.trim();
+            if (subConfig === '') continue;
 
             try {
               if (subConfig.startsWith('vmess://')) {
-                // Handle VMess configuration
                 let vmessData = subConfig.replace('vmess://', '');
                 vmessData = atob(vmessData);
                 let vmessConfig = JSON.parse(vmessData);
 
-                // Ensure WebSocket (ws) and port 443 for VMess
-                if (
-                  vmessConfig.sni &&
-                  !isIp(vmessConfig.sni) &&
-                  vmessConfig.net === 'ws' &&
-                  vmessConfig.port === 443
-                ) {
+                if (vmessConfig.sni && !isIp(vmessConfig.sni) && vmessConfig.net === 'ws' && vmessConfig.port === 443) {
+                  if (shouldSkipHost(vmessConfig.sni)) continue;
+
                   let configNew = {
                     v: '2',
                     ps: `Node-${vmessConfig.sni}`,
@@ -173,55 +151,41 @@ export default {
                     alpn: 'http/1.1',
                   };
 
-                  // Check for unique paths and avoid duplications
                   let fullPath = configNew.path;
                   if (!vmessPaths.has(fullPath)) {
-                    vmessPaths.add(fullPath);  // Add the path to the Set
+                    vmessPaths.add(fullPath);
                     let encodedVmess = 'vmess://' + btoa(JSON.stringify(configNew));
                     newConfigs += encodedVmess + '\n';
                   }
                 }
               } else if (subConfig.startsWith('vless://')) {
-                // Handle VLESS configuration
                 let vlessParts = subConfig.replace('vless://', '').split('@');
-                if (vlessParts.length !== 2) continue;  // Invalid format
+                if (vlessParts.length !== 2) continue;
 
                 let uuid = vlessParts[0];
                 let remainingParts = vlessParts[1].split('?');
-                if (remainingParts.length !== 2) continue;  // Invalid format
+                if (remainingParts.length !== 2) continue;
 
                 let [ipPort, params] = remainingParts;
                 let [ip, port] = ipPort.split(':');
-                if (!port) continue;  // Port is required
+                if (!port) continue;
 
                 let queryParams = new URLSearchParams(params);
                 let security = queryParams.get('security');
                 let sni = queryParams.get('sni');
-                let alpn = queryParams.get('alpn');
-                let fp = queryParams.get('fp');
-                let type = queryParams.get('type');  // For WebSocket check
+                let type = queryParams.get('type');
 
-                // Ensure WebSocket (type=ws) and port 443 for VLESS
-                if (
-                  sni &&
-                  !isIp(sni) &&
-                  security === 'tls' &&
-                  port === '443' &&
-                  type === 'ws'
-                ) {
+                if (sni && !isIp(sni) && security === 'tls' && port === '443' && type === 'ws') {
+                  if (shouldSkipHost(sni)) continue;
+
                   let newPath = `/${sni}${queryParams.get('path') || ''}`;
-
-                  // Check for unique paths and avoid duplications
                   if (!vlessPaths.has(newPath)) {
-                    vlessPaths.add(newPath);  // Add the path to the Set
-                    let newVlessConfig = `vless://${uuid}@${realpathname === '' ? url.hostname : realpathname}:${port}?encryption=none&security=${security}&sni=${url.hostname}&alpn=${alpn}&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${newPath}#Node-${sni}`;
+                    vlessPaths.add(newPath);
+                    let newVlessConfig = `vless://${uuid}@${realpathname === '' ? url.hostname : realpathname}:${port}?encryption=none&security=${security}&sni=${url.hostname}&alpn=http/1.1&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${newPath}#Node-${sni}`;
                     newConfigs += newVlessConfig + '\n';
                   }
                 }
               } else if (subConfig.startsWith('trojan://')) {
-                // Handle Trojan configuration
-
-                // Find the last '#' to separate the remark
                 let lastHashIndex = subConfig.lastIndexOf('#');
                 let configWithoutRemark = subConfig;
                 let remark = '';
@@ -230,72 +194,56 @@ export default {
                   remark = subConfig.substring(lastHashIndex + 1);
                 }
 
-                // Now parse configWithoutRemark
                 let trojanURL = configWithoutRemark.replace('trojan://', '');
                 let [passwordAndHost, params] = trojanURL.split('?');
-                if (!params) continue;  // Invalid format
+                if (!params) continue;
 
                 let [password, hostAndPort] = passwordAndHost.split('@');
-                if (!hostAndPort) continue;  // Invalid format
+                if (!hostAndPort) continue;
 
                 let [ip, port] = hostAndPort.split(':');
-                if (!port) continue;  // Port is required
+                if (!port) continue;
 
                 let queryParams = new URLSearchParams(params);
                 let security = queryParams.get('security');
                 let sni = queryParams.get('sni');
-                let alpn = queryParams.get('alpn');
-                let fp = queryParams.get('fp');
-                let type = queryParams.get('type');  // For WebSocket check
+                let type = queryParams.get('type');
 
-                // Ensure WebSocket (type=ws), TLS, and port 443 for Trojan
-                if (
-                  sni &&
-                  !isIp(sni) &&
-                  security === 'tls' &&
-                  port === '443' &&
-                  type === 'ws'
-                ) {
+                if (sni && !isIp(sni) && security === 'tls' && port === '443' && type === 'ws') {
+                  if (shouldSkipHost(sni)) continue;
+
                   let newPath = `/${sni}${decodeURIComponent(queryParams.get('path') || '')}`;
-
-                  // Check for unique paths and avoid duplications
                   if (!trojanPaths.has(newPath)) {
-                    trojanPaths.add(newPath);  // Add the path to the Set
-                    let newTrojanConfig = `trojan://${password}@${realpathname === '' ? url.hostname : realpathname}:${port}?security=${security}&sni=${url.hostname}&alpn=${alpn}&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${encodeURIComponent(newPath)}#${remark ? encodeURIComponent(remark) : `Node-${sni}`}`;
+                    trojanPaths.add(newPath);
+                    let newTrojanConfig = `trojan://${password}@${realpathname === '' ? url.hostname : realpathname}:${port}?security=${security}&sni=${url.hostname}&alpn=http/1.1&fp=chrome&allowInsecure=1&type=ws&host=${url.hostname}&path=${encodeURIComponent(newPath)}#${remark ? encodeURIComponent(remark) : `Node-${sni}`}`;
                     newConfigs += newTrojanConfig + '\n';
                   }
                 }
               }
             } catch (error) {
-              // Skip non-compliant configurations and move to the next
               continue;
             }
           }
         } catch (error) {
-          // Handle any fetch errors for subLink
           continue;
         }
       }
 
-      // Check for the &n=xxx parameter
       const nParam = url.searchParams.get('n');
-      let responseConfigs = newConfigs.trim().split('\n').filter(line => line !== ''); // Ensure no empty lines
+      let responseConfigs = newConfigs.trim().split('\n').filter(line => line !== '');
 
       if (nParam && !isNaN(nParam) && parseInt(nParam) > 0) {
-        const n = Math.min(parseInt(nParam), responseConfigs.length); // Get the minimum of n and available configs
-        const randomConfigs = getRandomItems(responseConfigs, n); // Get random items
+        const n = Math.min(parseInt(nParam), responseConfigs.length);
+        const randomConfigs = getRandomItems(responseConfigs, n);
         return new Response(randomConfigs.join('\n'), {
           headers: { 'Content-Type': 'text/plain' },
         });
       }
 
-      // If no &n=xxx parameter, return the entire result
       return new Response(newConfigs, {
         headers: { 'Content-Type': 'text/plain' },
       });
-      
     } else {
-      // Handle non-/sub requests by proxying them
       const url = new URL(request.url);
       const splitted = url.pathname.replace(/^\/*/, '').split('/');
       const address = splitted[0];
@@ -307,25 +255,22 @@ export default {
   },
 };
 
-// Function to get random items from an array
+function shouldSkipHost(host) {
+  return host && (host.toLowerCase().includes("workers.dev") || host.toLowerCase().includes("pages.dev"));
+}
+
 function getRandomItems(array, count) {
-  const shuffled = array.sort(() => 0.5 - Math.random()); // Shuffle the array
-  return shuffled.slice(0, count); // Return the first 'count' items
+  const shuffled = array.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
 }
 
 function isIp(ipstr) {
   try {
     if (!ipstr) return false;
-    // Regular expression to validate IPv4 addresses
     const ipv4Regex = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/;
-    if (!ipv4Regex.test(ipstr)) {
-      return false;
-    }
+    if (!ipv4Regex.test(ipstr)) return false;
     let segments = ipstr.split('.');
-    // Ensure the last octet is not "0"
-    if (segments[3] === '0') {
-      return false;
-    }
+    if (segments[3] === '0') return false;
     return true;
   } catch (e) {
     return false;
