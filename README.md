@@ -9,7 +9,7 @@ Access Trojan configs using Cloudflare CDN.
   </h3> 
 </h2>
 
-> [!HINT]
+> [!TIP]
 > New UPDATE! Cloudflare Pages is supported, [download here](https://github.com/Surfboardv2ray/Trojan-worker/releases/latest/download/PAGES.zip)
 
 [![Version](https://img.shields.io/github/v/release/surfboardv2ray/Trojan-worker?label=Version&color=blue)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
