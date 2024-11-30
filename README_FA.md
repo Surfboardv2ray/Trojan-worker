@@ -13,10 +13,7 @@
     </p>
 </div>
 <br>
-<div>
-> [!TIP]
 > آپدیت جدید!! پشتیبانی از پیجز کلاودفلیر، [از اینجا دانلود کنید](https://github.com/Surfboardv2ray/Trojan-worker/releases/latest/download/PAGES.zip)
-</div>
   
 [![نسخه](https://img.shields.io/github/v/release/surfboardv2ray/Trojan-worker?label=Version&color=blue)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
 [![دانلود](https://img.shields.io/github/downloads/surfboardv2ray/Trojan-worker/total?label=Downloads)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
