@@ -12,14 +12,15 @@
     <a href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
     </p>
 </div>
-<br>
-> آپدیت جدید!! پشتیبانی از پیجز کلاودفلیر، [از اینجا دانلود کنید](https://github.com/Surfboardv2ray/Trojan-worker/releases/latest/download/PAGES.zip)
+
+
   
 [![نسخه](https://img.shields.io/github/v/release/surfboardv2ray/Trojan-worker?label=Version&color=blue)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
 [![دانلود](https://img.shields.io/github/downloads/surfboardv2ray/Trojan-worker/total?label=Downloads)](https://github.com/surfboardv2ray/Trojan-worker/releases/latest)
 [![استار](https://img.shields.io/github/stars/surfboardv2ray/Trojan-worker?style=flat&label=Stars&color=tomato
 )](https://github.com/surfboardv2ray/Trojan-worker)
 
+> آپدیت جدید!! پشتیبانی از پیجز کلاودفلیر، [از اینجا دانلود کنید](https://github.com/Surfboardv2ray/Trojan-worker/releases/latest/download/PAGES.zip)
 ## مقدمه
 🟢 در این اسکریپت علاوه بر کانفیگ‌های vmess و vless، کانفیگ‌های Trojan رو هم پشت CDN کلاودفلیر قرار میدیم.
 
