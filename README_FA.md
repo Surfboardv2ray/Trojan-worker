@@ -12,7 +12,7 @@
     <a href="https://www.youtube.com/watch?v=v12y52a0w6w">ویدیو آموزشی یوتوب</a>
     </p>
 </div>
-> [!TIPS]
+> [!TIP]
 > آپدیت جدید!! پشتیبانی از پیجز کلاودفلیر، [از اینجا دانلود کنید](https://github.com/Surfboardv2ray/Trojan-worker/releases/latest/download/PAGES.zip)
 
   
