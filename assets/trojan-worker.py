@@ -6,7 +6,7 @@ from urllib.parse import urlparse, urlunparse, urlencode
 
 # Configuration variables
 NUM_CONFIGS = 100  # Number of configs to return
-HOST = "YOURS.ntbc.workers.dev"  # Custom host
+HOST = "YOURS.workers.dev"  # Custom host
 SNI = "YOURS.workers.dev"  # Custom SNI
 IP_ADDRESS = "YOUR_IP"  # Custom IP address for configs
 
